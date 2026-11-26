@@ -23,7 +23,7 @@ function brotliHeaders(req, res, next) {
 
 export default defineConfig({
   // Set this to the real domain once deployed (used for absolute URLs).
-  site: 'https://example.vercel.app',
+  site: 'https://axelcobelo.vercel.app',
   vite: {
     plugins: [
       {
