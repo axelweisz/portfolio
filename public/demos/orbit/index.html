@@ -26,6 +26,20 @@
     <div id="loading"><span>&gt; loading game…</span><div id="bar"><div id="fill"></div></div><span id="err"></span></div>
     <button id="fs" type="button">⤢ fullscreen</button>
     <script>
+      // Safari (and some other browsers) have no Web MIDI. The game's MIDI plugin calls it
+      // anyway and crashes, so give it a stand-in that reports "no MIDI devices".
+      // The game then runs on the keyboard.
+      if (typeof navigator.requestMIDIAccess !== 'function') {
+        navigator.requestMIDIAccess = function () {
+          return Promise.resolve({
+            inputs: new Map(), outputs: new Map(), sysexEnabled: false, onstatechange: null,
+            addEventListener: function () {}, removeEventListener: function () {},
+          });
+        };
+        window.__noWebMIDI = true;
+      }
+    </script>
+    <script>
       // Unity WebGL build, gzip with decompression fallback (.unityweb): works on any server.
       // Uses Web MIDI (Chrome / Edge) — the parent iframe must allow "midi".
       var build = 'Build/OrbitWeb';

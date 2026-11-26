@@ -9,7 +9,7 @@ cover: ./cover.png
 coverRoll: ./cover-roll.png
 demo: /demos/orbit/index.html
 demoAspect: 16 / 9
-demoHint: Chrome or Edge · MIDI controller (knob + pads) or keyboard
+demoHint: Keyboard in any browser · MIDI controller in Chrome or Edge
 ---
 
 Prototype of an arcade game played with a MIDI controller instead of a gamepad. You are a ship, a small triangle,
