@@ -1,16 +1,17 @@
 ---
 title: Midnight Scurry
+year: 2024
 order: 1
 status: archived
-client: Team project — Video Game Programming (AEC), Collège de Bois-de-Boulogne
-role: TODO
-credits: TODO — team members and what each did
+client: Graduation project — Video Game Programming (AEC), Collège de Bois-de-Boulogne
+role: Developer
+credits: Made with Ahmed Yassine, Maurice Fotso and Nicolas Décoeur
 tools: [Unity, C#, WebGL]
 cover: ./cover.png
 coverRoll: ./cover-roll.png
 demo: /demos/scurry/index.html
 ---
 
-Placeholder. A 2D platformer made by our team at Collège de Bois-de-Boulogne: you play a small hooded creature
-collecting acorns in a dark forest while avoiding a searchlight. Correct this — what's the goal, what did you build,
-how long did the team have?
+A short platformer made in Unity as our graduation project for the Video Game Programming program (AEC) at
+Collège de Bois-de-Boulogne, with my classmates Ahmed Yassine, Maurice Fotso and Nicolas Décoeur. You play a small
+hooded creature gathering acorns in a dark forest while staying out of a searchlight.
