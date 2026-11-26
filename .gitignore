@@ -3,5 +3,3 @@ dist/
 .astro/
 .DS_Store
 .env
-# Over GitHub's 100 MB per-file limit — cut a shorter excerpt, then remove this line
-public/media/amazonia-br-02-installation.mp4

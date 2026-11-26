@@ -26,9 +26,13 @@ const logs = (await getCollection('logs', ({ data }) => !data.draft && data.proj
   (a, b) => b.data.date.getTime() - a.data.date.getTime(),
 );
 const posterImg = await getImage({ src: poster ?? cover, width: 1280 });
+// Link preview: the project's cover, plus the first ~160 characters of its paragraph
+const previewImg = await getImage({ src: cover, width: 1200, format: 'jpg' });
+const plain = (project.body ?? '').replace(/\s+/g, ' ').trim();
+const description = plain.length > 160 ? plain.slice(0, plain.lastIndexOf(' ', 157)) + '…' : plain;
 ---
 
-<Base title={title}>
+<Base title={title} description={description} image={previewImg.src}>
   <article class="wrap project">
     <p class="crumb">▸ ▣ <a href="/"><b>Work</b></a> ▸ <span class="hl">{title}</span></p>
 

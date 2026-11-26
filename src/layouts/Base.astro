@@ -5,8 +5,16 @@ import { site } from '../site.config';
 interface Props {
   title?: string;
   description?: string;
+  image?: string; // path or URL of the preview image (1200×630 works best)
 }
-const { title, description = `${site.firstName} ${site.lastName} — ${site.tagline.join(', ')}` } = Astro.props;
+const {
+  title,
+  description = `${site.firstName} ${site.lastName} — ${site.tagline.join(', ')}. Based in Montréal.`,
+  image = '/og-default.png',
+} = Astro.props;
+// Absolute addresses for link previews (uses `site` from astro.config.mjs)
+const pageUrl = new URL(Astro.url.pathname, Astro.site);
+const imageUrl = new URL(image, Astro.site);
 const fullTitle = title ? `${title} — ${site.firstName} ${site.lastName}` : `${site.firstName} ${site.lastName} — Portfolio`;
 const path = Astro.url.pathname.replace(/\/$/, '') || '/';
 const isActive = (href: string) =>
@@ -21,6 +29,19 @@ const isActive = (href: string) =>
     <meta name="description" content={description} />
     <title>{fullTitle}</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={pageUrl} />
+
+    <!-- Link previews (WhatsApp, LinkedIn, Facebook, iMessage, Slack, X…) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={`${site.firstName} ${site.lastName}`} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={pageUrl} />
+    <meta property="og:image" content={imageUrl} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
   </head>
   <body id="top">
     <header class="site-header">
