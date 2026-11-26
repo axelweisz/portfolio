@@ -1,0 +1,89 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { site } from '../site.config';
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<Base>
+  <section class="hero">
+    <hr class="hairline" />
+    <div class="wrap hero-row">
+      <div class="hello">
+        <span class="hi">_Hello, I'm</span>
+        <span class="rule" aria-hidden="true"></span>
+      </div>
+      <h1 class="name">
+        <span>{site.firstName}</span>
+        <span class="last">{site.lastName}</span>
+      </h1>
+      <div class="sub">
+        <div class="prompt">{site.tagline.join(' · ')}</div>
+        <div class="prompt teal">{site.location.replace('Based in ', '')}</div>
+        <a href="/background" class="pill more">Read more</a>
+      </div>
+    </div>
+    <hr class="hairline" />
+  </section>
+
+  <section class="wrap work" id="work">
+    <p class="crumb">▸ ▣ <b>Portfolio</b> ▸ <span class="hl">Work</span></p>
+    <div class="grid">
+      {projects.map((p, i) => <ProjectCard project={p} index={i} />)}
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero { padding-top: clamp(1rem, 4vh, 2.5rem); }
+  .hero-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 1.25rem clamp(1.25rem, 3vw, 2.5rem);
+    padding-top: clamp(1.5rem, 4vh, 2.5rem);
+    padding-bottom: clamp(1.25rem, 3vh, 2rem);
+  }
+  .hello { display: flex; align-items: center; gap: 1rem; font-size: 0.95rem; align-self: start; padding-top: 0.6em; }
+  .rule { display: inline-block; width: clamp(2.5rem, 6vw, 6rem); border-top: 1px solid var(--muted); }
+  .name {
+    margin: 0;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(2.6rem, 6.5vw, 5.25rem);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    display: flex;
+    flex-direction: column;
+  }
+  .name .last { padding-left: 1.6em; white-space: nowrap; }
+  .sub {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.5rem 1.5rem;
+    font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  }
+  .sub .teal { font-size: 0.85em; }
+
+  .work { padding-top: 2.5rem; }
+  .grid {
+    margin-top: 1.25rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2.5rem 1.75rem;
+  }
+
+  @media (max-width: 1100px) { .sub { justify-content: flex-start; } }
+  @media (max-width: 640px) {
+    .hero-row { grid-template-columns: 1fr; }
+    .hello { padding-top: 0; }
+    .name .last { padding-left: 1em; white-space: normal; }
+  }
+</style>

@@ -1,0 +1,37 @@
+---
+// Plays a local file (/media/x.mp4) or embeds Vimeo / YouTube.
+// Autoplay only works muted; visitors unmute with the controls.
+interface Props {
+  src: string;
+  title: string;
+  poster?: string;
+  autoplay?: boolean;
+}
+const { src, title, poster, autoplay = true } = Astro.props;
+
+let embed: string | null = null;
+const vimeo = src.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+const yt = src.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([\w-]{11})/);
+if (vimeo) {
+  embed = `https://player.vimeo.com/video/${vimeo[1]}?autoplay=${autoplay ? 1 : 0}&muted=${autoplay ? 1 : 0}&loop=1&title=0&byline=0&portrait=0&dnt=1`;
+} else if (yt) {
+  embed = `https://www.youtube-nocookie.com/embed/${yt[1]}?autoplay=${autoplay ? 1 : 0}&mute=${autoplay ? 1 : 0}&loop=1&playlist=${yt[1]}&rel=0&modestbranding=1`;
+}
+---
+
+<div class="player">
+  {embed ? (
+    <iframe src={embed} title={title} allow="autoplay; fullscreen; picture-in-picture" allowfullscreen loading="eager"></iframe>
+  ) : (
+    <video src={src} poster={poster} autoplay={autoplay} muted={autoplay} loop={autoplay} playsinline controls preload="metadata"></video>
+  )}
+</div>
+
+<style>
+  .player {
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border: 1px solid var(--line);
+  }
+  .player iframe, .player video { width: 100%; height: 100%; border: 0; object-fit: contain; }
+</style>

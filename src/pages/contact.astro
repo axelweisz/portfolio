@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../site.config';
+// The form only shows once a real Formspree URL is set in site.config.ts
+const formReady = !site.formAction.includes('YOUR_FORM_ID');
+---
+
+<Base title="Contact">
+  <section class="wrap contact">
+    <div>
+      <p class="crumb">▸ ▣ <b>Portfolio</b> ▸ <span class="hl">Contact</span></p>
+      <h1>Say…<br />Hello</h1>
+      <p class="prompt">open to collaborations</p>
+      <p class="direct">or write to <a href={`mailto:${site.email}`}>{site.email}</a></p>
+    </div>
+
+    {formReady && <form action={site.formAction} method="POST">
+      <label>_name<input name="name" required autocomplete="name" /></label>
+      <label>_email<input type="email" name="email" required autocomplete="email" /></label>
+      <label>_message<textarea name="message" rows="6" required></textarea></label>
+      <button type="submit" class="pill">Send →</button>
+    </form>}
+  </section>
+</Base>
+
+<style>
+  .contact {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: start;
+    padding-top: 1rem;
+  }
+  h1 { font-family: var(--font-display); font-size: clamp(2.75rem, 7vw, 5rem); line-height: 1; margin: 1.5rem 0 1rem; }
+  .direct { color: var(--muted); font-size: 0.9rem; }
+  .direct a { color: var(--teal); }
+  form { display: grid; gap: 1.25rem; margin-top: 3rem; }
+  label { display: grid; gap: 0.35rem; font-size: 0.8rem; color: var(--coral); }
+  input, textarea {
+    font: inherit;
+    font-family: var(--font-body);
+    font-size: 1rem;
+    color: var(--text);
+    background: transparent;
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    padding: 0.5rem 0;
+    outline: none;
+    resize: vertical;
+  }
+  input:focus, textarea:focus { border-bottom-color: var(--teal); }
+  button { justify-self: start; background: none; color: var(--text); cursor: pointer; font-size: 0.95rem; }
+  @media (max-width: 760px) { .contact { grid-template-columns: 1fr; } form { margin-top: 0; } }
+</style>

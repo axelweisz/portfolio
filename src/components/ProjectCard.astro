@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+  index: number;
+}
+const { project, index } = Astro.props;
+const { title, cover, coverRoll, status } = project.data;
+const num = String(index + 1).padStart(2, '0');
+---
+
+<a href={`/projects/${project.id}/`} class="card">
+  <div class="frame">
+    <Image src={cover} alt={title} widths={[400, 800]} sizes="(max-width: 700px) 100vw, 33vw" class="img base" />
+    {coverRoll && (
+      <Image src={coverRoll} alt="" widths={[400, 800]} sizes="(max-width: 700px) 100vw, 33vw" class="img roll" aria-hidden="true" />
+    )}
+  </div>
+  <div class="caption">
+    <span class="num">/*{num}</span>
+    <span class="title">{title}</span>
+    {status === 'active' && <span class="live">● active</span>}
+  </div>
+</a>
+
+<style>
+  .card { display: block; }
+  .frame {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--panel);
+    border: 1px solid var(--line);
+  }
+  .img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: opacity 0.35s, transform 0.6s; }
+  .roll { opacity: 0; }
+  .card:hover .roll, .card:focus-visible .roll { opacity: 1; }
+  .card:hover .img { transform: scale(1.02); }
+  .caption {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 0.75rem;
+    align-items: baseline;
+    padding: 0.7rem 0 0;
+    font-size: 0.85rem;
+  }
+  .num { color: var(--muted); }
+  .title { color: var(--text); }
+  .card:hover .title { color: var(--coral); }
+  .year { color: var(--teal); }
+  .live { color: var(--coral); }
+</style>

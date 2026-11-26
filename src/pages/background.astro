@@ -1,0 +1,122 @@
+---
+import Base from '../layouts/Base.astro';
+
+// Newest first. Edit freely.
+const experience = [
+  {
+    years: '2025 – now',
+    title: 'Independent R&D',
+    place: 'Self-directed, Montréal',
+    note: 'Building AR, Unity, VR and speech-technology prototypes — the projects posted in the Log.',
+  },
+  {
+    years: '2022',
+    title: 'Production Coordinator',
+    place: 'Technicolor, Montréal',
+    note: 'Coordinated the compositing department’s deliverables and schedules.',
+  },
+  {
+    years: '2017 – 2021',
+    title: 'Augmented Reality Researcher',
+    place: 'Centre NAD / UQAC & Université Laval, Montréal',
+    note: 'Visual and poetic AR pieces combining image, text and motion; set up and ran them for public demonstrations.',
+  },
+  {
+    years: '2016 – 2017',
+    title: 'AR App Developer',
+    place: 'Halem, São Paulo',
+    note: 'Designed the app architecture and a live-update system for augmentations; built the usage-reporting backend.',
+  },
+  {
+    years: '2011 – 2016',
+    title: 'Interactive Media Developer',
+    place: 'Estúdio Mobile, São Paulo',
+    note: 'Interactive installations, video mapping and live VJ sets at public events.',
+  },
+  {
+    years: '2006 – 2011',
+    title: 'Producer / Director / Editor',
+    place: 'Zøi Filmes, São Paulo',
+    note: 'Ran productions from writing and shooting through editing and delivery.',
+  },
+];
+
+const education = [
+  { years: '2023 – 2025', title: 'Video Game Programming (AEC)', place: 'Collège de Bois-de-Boulogne, Montréal' },
+  { years: '', title: 'Master’s, Digital Design — Augmented Reality', place: 'Centre NAD, Montréal' },
+  { years: '', title: 'Bachelor’s, Business Administration', place: 'EAESP-FGV, São Paulo' },
+  { years: '', title: 'Film Studies, screenwriting (2 years)', place: 'ECA-USP, São Paulo' },
+  { years: '', title: 'Computer Science (2 years)', place: 'Universidade Mackenzie, São Paulo' },
+];
+
+const tools = ['Premiere Pro', 'Final Cut Pro', 'Unity / C#', 'Augmented reality', 'VR (Meta Quest)', 'Video mapping & VJ', 'HTML / CSS / JS', 'Astro'];
+const languages = ['Portuguese', 'Spanish', 'French', 'English'];
+---
+
+<Base title="Background">
+  <section class="wrap">
+    <p class="crumb">▸ ▣ <b>Portfolio</b> ▸ <span class="hl">Background</span></p>
+    <h1>Background</h1>
+
+    <div class="prose intro">
+      <p>
+        I started in film — writing, directing and editing at Zøi Filmes in São Paulo — then moved into interactive
+        media: video mapping, live VJ sets, installations, and augmented reality apps. In Montréal I did a master’s in
+        digital design focused on AR, worked in post-production at Technicolor, and studied video game programming.
+        These days I build prototypes in Unity, AR and VR, and I’m looking for people to make things with.
+      </p>
+    </div>
+
+    <div class="cols">
+      <div>
+        <p class="crumb">▸ <span class="hl">Experience</span></p>
+        <ul class="list">
+          {experience.map((e) => (
+            <li>
+              <span class="yrs">{e.years}</span>
+              <div><b>{e.title}</b><span class="place">{e.place}</span>{e.note && <span class="note">{e.note}</span>}</div>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div>
+        <p class="crumb">▸ <span class="hl">Education</span></p>
+        <ul class="list">
+          {education.map((e) => (
+            <li><span class="yrs">{e.years || '—'}</span><div><b>{e.title}</b><span class="place">{e.place}</span></div></li>
+          ))}
+        </ul>
+
+        <p class="crumb sub">▸ <span class="hl">Tools</span></p>
+        <ul class="tags">{tools.map((s) => <li class="pill">{s}</li>)}</ul>
+
+        <p class="crumb sub">▸ <span class="hl">Languages</span></p>
+        <p class="langs">{languages.join(' · ')}</p>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  h1 { font-family: var(--font-display); font-size: clamp(2.5rem, 7vw, 4.5rem); margin: 1.5rem 0 1.5rem; line-height: 1; }
+  .intro { margin-bottom: 3.5rem; }
+  .cols { display: grid; grid-template-columns: 1.25fr 1fr; gap: clamp(2rem, 5vw, 4.5rem); }
+  .list { list-style: none; padding: 0; margin: 1rem 0 0; }
+  .list li {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--line);
+    font-size: 0.9rem;
+  }
+  .yrs { color: var(--teal); }
+  .list b { font-weight: 400; display: block; }
+  .place { color: var(--muted); font-size: 0.85rem; display: block; }
+  .note { font-family: var(--font-body); font-size: 0.9rem; color: #c9c7c0; display: block; margin-top: 0.35rem; line-height: 1.5; }
+  .sub { margin-top: 2.5rem; }
+  .tags { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+  .tags .pill { font-size: 0.8rem; }
+  .langs { margin-top: 0.75rem; font-size: 0.9rem; }
+  @media (max-width: 860px) { .cols { grid-template-columns: 1fr; } }
+</style>
